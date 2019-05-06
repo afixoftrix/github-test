@@ -3,15 +3,17 @@ import * as Layout from "../../theme/ui-template";
 import SearchSection from "../../containers/Search";
 import SideSearch from "../../components/SideSearch";
 
-export default class Home extends Component {
+export default class Search extends Component {
     render() {
+        const { searchData, loading } = this.props
         return (
             <Layout.Container>
+                {loading && <div>LOADING.. </div>}
                 <Layout.Left>
-                    <SideSearch />
+                    <SideSearch num={searchData.total_count} />
                 </Layout.Left>
                 <Layout.Right>
-                    <SearchSection />
+                    <SearchSection data={searchData} />
                 </Layout.Right>
             </Layout.Container>
         );

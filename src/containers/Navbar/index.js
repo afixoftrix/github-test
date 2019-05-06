@@ -1,10 +1,39 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { withRouter } from "react-router";
 import * as Nav from './style'
 import Icon from './Icon';
 import Search from './Search'
+import { searchUsers } from '../../api/search';
 
-export default class NavBar extends Component {
+class NavBar extends Component {
+    state = {
+        search: '',
+        searchResult: {},
+        loading: false,
+        error: ""
+    }
+
+    handleChange = e => {
+        this.setState({
+            search: e.target.value
+        })
+    }
+    handleSubmit = (e) => {
+        e.preventDefault()
+        const { search } = this.state
+        this.props.loadingOn()
+        searchUsers(search).then(res => {
+            console.log(res.data);
+            this.setState({ searchResult: {...res.data}});
+            this.props.searchAction(res.data)
+            this.props.loadingOff();
+            this.props.history.push("/search")
+        }).catch( err => {
+            this.setState({ error: err })
+        })
+        this.props.history.push("/search");
+    }
     render() {
         return (
             <Nav.Container>
@@ -18,9 +47,9 @@ export default class NavBar extends Component {
                             />
                         </Link>
                     </div>
-                    <div>
-                        <Search />
-                    </div>
+                    <form onSubmit={this.handleSubmit} >
+                        <Search onChange={this.handleChange} />
+                    </form>
                     <Nav.LinkContainer>
                         <Nav.Link>
                             <Link to="#">Pull requests</Link>
@@ -41,3 +70,5 @@ export default class NavBar extends Component {
         );
     }
 }
+
+export default withRouter(NavBar)

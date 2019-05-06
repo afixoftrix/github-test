@@ -5,13 +5,14 @@ import TabSection from '../../containers/Tabs';
 
 export default class Home extends Component {
     render() {
+        const { userData } = this.props
         return (
             <Layout.Container>
                 <Layout.Left>
                     <UserInfo />
                 </Layout.Left>
                 <Layout.Right>
-                    <TabSection />
+                    <TabSection userData={userData} />
                 </Layout.Right>
             </Layout.Container>
         )

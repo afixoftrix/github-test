@@ -62,12 +62,15 @@ class Search extends React.Component {
 
     render() {
         const { showSlash } = this.state;
+        const { onChange } = this.props;
         return (
             <Container>
                 <Input
+                    name="search"
                     onFocus={this.handleFocus}
                     onBlur={this.handleBlur}
                     placeholder="Search or jump to…"
+                    onChange={ onChange }
                 />
                 <Slash show={showSlash}>/</Slash>
             </Container>

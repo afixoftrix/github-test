@@ -1,11 +1,17 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from "styled-components";
+import axios from "axios";
+
 import theme from './theme'
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+axios.defaults.baseURL = "https://api.github.com";
+
+
 
 ReactDOM.render(
     <BrowserRouter>

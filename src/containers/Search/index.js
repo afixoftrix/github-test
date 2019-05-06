@@ -13,15 +13,24 @@ import UserCard from "../../components/UserCard";
 
 export default class SearchSection extends Component {
     render() {
-        const { resNum } = this.props;
+        const { data } = this.props;
 
         return (
             <Search.Container>
                 <Search.Nav>
-                    <Search.Num>{resNum} users</Search.Num>
+                    <Search.Num>{data.total_count} users</Search.Num>
                 </Search.Nav>
                 <Search.Content>
-                    <UserCard />
+                    {!!data.items && data.items.map(( item, i) => {
+                        return (
+                            <UserCard
+                                avatar={item.avatar_url}
+                                user={item.login}
+                                link={item.html_url}
+                                key={i}
+                            />
+                        );
+                    })}
                 </Search.Content>
             </Search.Container>
         );
